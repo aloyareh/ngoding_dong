@@ -16,6 +16,9 @@ class user extends Authenticatable
         'email',
         'password',
     ];
-}
 
+    public function userProgres() {
+        return $this->hasMany(userProgres::class); 
+    }
+}
 

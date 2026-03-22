@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bahasas', function (Blueprint $table) {
             $table->id();
             $table->string('nama_bahasa');
-            $table->integer('jumlah_bahasa');
+            $table->integer('jumlah_modul');
             $table->timestamps();
         });
     }

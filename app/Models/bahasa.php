@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class bahasa extends Model
 {
     use HasFactory;
+
+    public function modul() {
+        return $this->hasMany(modul::class); 
+    }
 }
