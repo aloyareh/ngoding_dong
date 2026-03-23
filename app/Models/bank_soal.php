@@ -11,11 +11,11 @@ class bank_soal extends Model
 
     public function modul()
     {
-        return $this->belongsTo(Modul::class);
+        return $this->belongsTo(modul::class);
     }
 
-    public function pilihanJawaban()
+    public function pilihan_jawaban()
     {
-        return $this->hasMany(PilihanJawaban::class);
+        return $this->hasMany(pilihan_jawaban::class);
     }
 }

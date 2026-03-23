@@ -11,16 +11,16 @@ class modul extends Model
 
     public function bahasa()
     {
-        return $this->belongsTo(Bahasa::class);
+        return $this->belongsTo(bahasa::class);
     }
 
-    public function bankSoal()
+    public function bank_soal()
     {
-        return $this->hasMany(BankSoal::class);
+        return $this->hasMany(bank_soal::class);
     }
 
-    public function userProgres()
+    public function user_proges()
     {
-        return $this->hasMany(UserProgres::class);
+        return $this->hasMany(user_proges::class);
     }
 }

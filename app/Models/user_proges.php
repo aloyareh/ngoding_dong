@@ -11,11 +11,11 @@ class user_proges extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(user::class);
     }
 
     public function modul()
     {
-        return $this->belongsTo(Modul::class);
+        return $this->belongsTo(modul::class);
     }
 }

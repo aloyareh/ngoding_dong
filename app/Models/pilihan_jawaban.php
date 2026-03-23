@@ -9,8 +9,8 @@ class pilihan_jawaban extends Model
 {
     use HasFactory;
 
-    public function bankSoal()
+    public function bank_soal()
     {
-        return $this->belongsTo(BankSoal::class);
+        return $this->belongsTo(bank_soal::class);
     }
 }

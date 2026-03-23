@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class user extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
@@ -17,8 +19,8 @@ class user extends Authenticatable
         'password',
     ];
 
-    public function userProgres() {
-        return $this->hasMany(userProgres::class); 
+    public function user_proges() {
+        return $this->hasMany(user_proges::class); 
     }
 }
 

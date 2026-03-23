@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamps();
+            $table->integer('xp')->default(0); // Tambahin ini bos! Default XP awal adalah 0.
         });
     }
 
