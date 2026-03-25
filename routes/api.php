@@ -30,4 +30,15 @@ use App\Http\Controllers\AuthController;
 
 // Rute buat Autentikasi API
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']); 
+
+// Ini adalah Jalur VIP. Satpamnya bernama 'auth:sanctum'
+Route::middleware('auth:sanctum')->get('/profil', function (Request $request) {
+    return response()->json([
+        'message' => 'Selamat datang di Ruang VIP!',
+        'data_user' => $request->user() // Ini bakal nampilin data siapa yang lagi login
+    ]);
+});
+
+// Rute logout juga harus dijagain satpam
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);

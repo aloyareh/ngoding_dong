@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\user;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -18,7 +18,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6'
         ]);
 
-        $user = User::create([
+        $user = user::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
@@ -30,7 +30,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Mantap! Akun berhasil dibuat.',
+            'message' => 'Akun berhasil dibuat.',
             'user' => $user,
             'token' => $token
         ]);
@@ -39,26 +39,42 @@ class AuthController extends Controller
     // 2. Fungsi buat Pemain Lama (Login)
     public function login(Request $request)
     {
+        // 1. Validasi: Kita ganti kuncinya jadi 'login' biar universal
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
+            'login' => 'required', // Bisa diisi email ATAU username
+            'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        // 2. Cari user: Cek apakah inputan 'login' itu ada di kolom email ATAU username
+        $user = user::where('email', $request->login)
+                    ->orWhere('username', $request->login)
+                    ->first();
 
-        // Cek email ada nggak, dan passwordnya bener nggak?
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        // 3. Cek kecocokan: Kalau user nggak ketemu ATAU password salah
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Email atau Password salah bos!'
+                'message' => 'Email/Username atau Password salah!'
             ], 401);
         }
 
+        // 4. Kalau lolos, cetak tiket/token baru
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        // 5. Kasih balasan sukses
         return response()->json([
-            'message' => 'Welcome back, bos!',
+            'message' => 'Login berhasil!',
             'user' => $user,
             'token' => $token
-        ]);
+        ], 200);
+    }
+
+    public function logout(Request $request)
+    {
+        // Cari token yang lagi dipake user saat ini, terus hapus (revoke) dari database
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Berhasil logout. Sampai jumpa lagi.'
+        ], 200);
     }
 }
